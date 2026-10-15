@@ -26,6 +26,16 @@ ROMs are not included. The MRAs expect the usual MAME ROM zips in `games/mame/`.
 
 Commit to `main` and push. A GitHub Action rebuilds `db.json.zip` on the `db` branch within a few minutes.
 
+For a new build of a core, `publish.sh` does all of this in one go (run it from WSL):
+
+```bash
+./publish.sh ~/Arcade-FireTrap_MiSTer      # newest .rbf from releases/ or output_files/ + releases/*.mra
+./publish.sh -d ~/Arcade-FireTrap_MiSTer   # dry run
+./publish.sh -n StarCastle path/to/core.rbf "Star Castle.mra"
+```
+
+It saves the core as `<Name>_<today>.rbf`, removes older builds of that core, copies the MRAs into `_Arcade/_misc`, commits and pushes. The database build doesn't install `.sh` files from the repo root, so the script never ends up on the SD card.
+
 - New core build: add `Name_YYYYMMDD.rbf` and delete the old one. Downloader removes the old file from the SD card on the next update.
 - Don't commit files that another database already ships at the same path.
 - Files must be under 100 MB. Don't use Git LFS.
